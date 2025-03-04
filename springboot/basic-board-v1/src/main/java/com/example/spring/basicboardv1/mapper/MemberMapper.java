@@ -1,8 +1,10 @@
-package com.example.basicboardv1.mapper;
+package com.example.spring.basicboardv1.mapper;
 
+import com.example.spring.basicboardv1.model.Member;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Mapper
-public interface MemberInterface {
+public interface MemberMapper {
+    void insertMember(Member member);
+    Member selectMemberByUserId(String userId);
 }
