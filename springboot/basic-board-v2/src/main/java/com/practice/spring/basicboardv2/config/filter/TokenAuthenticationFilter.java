@@ -37,13 +37,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }else  {
             filterChain.doFilter(request,response);
         }    
-            
-            
-          
-        }
-        
 
-    
+    }
+
     private String resolveToken(HttpServletRequest request){
 
        String bearerToken = request.getHeader(HEADER_AUTHORIZATION);

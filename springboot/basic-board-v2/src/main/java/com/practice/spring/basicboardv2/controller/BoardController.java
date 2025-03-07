@@ -10,4 +10,8 @@ public class BoardController {
     public String boardList(){
         return "board-list";
     }
+    @GetMapping("/write")
+    public String write(){
+        return "board-write";
+    }
 }

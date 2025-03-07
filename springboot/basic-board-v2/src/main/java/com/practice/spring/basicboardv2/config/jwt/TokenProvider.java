@@ -2,10 +2,7 @@ package com.practice.spring.basicboardv2.config.jwt;
 
 import com.practice.spring.basicboardv2.model.Member;
 import com.practice.spring.basicboardv2.type.Role;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +74,7 @@ public class TokenProvider {
             //복호화 과정에서 에러가 나면 유효하지 않은 토큰
             System.out.println("token error");
             return 3;
+            // 더이상 진행이 안됨
         }
 
     }
@@ -97,6 +95,7 @@ public class TokenProvider {
                 .claim("id", member.getId())
                 .claim("role", member.getRole())//클레임은 넣고 싶은 데이터란 의미임
                 .claim("userName",member.getUserName()) //민감한 정보는 안됨.(패스워드 연락처 주소 등)
+                .signWith(getSecretKey(), SignatureAlgorithm.HS256)//서명
                 .compact();
 
 

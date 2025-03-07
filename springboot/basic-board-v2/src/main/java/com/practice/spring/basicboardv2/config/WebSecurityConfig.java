@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                                         new AntPathRequestMatcher("/","GET"),
                                         new AntPathRequestMatcher("/member/join","GET"),
                                         new AntPathRequestMatcher("/member/login","GET"),
+                                        new AntPathRequestMatcher("write","GET"),
                                         new AntPathRequestMatcher("/Join","POST"),
                                         new AntPathRequestMatcher("/login","POST"),
                                         new AntPathRequestMatcher("/logout","POST")
