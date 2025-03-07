@@ -30,7 +30,7 @@ public class TokenProvider {
 
     private final JwtProperties jwtProperties;
 
-    String generateToken(Member member, Duration expiredAt) {
+    public String generateToken(Member member, Duration expiredAt) {
         Date now = new Date();
         return makeToken(
                 new Date( now.getTime()+expiredAt.toMillis()),
@@ -80,6 +80,7 @@ public class TokenProvider {
         }
 
     }
+
 
 
 
