@@ -1,12 +1,19 @@
 package com.practice.spring.basicboardv2.controller;
 
+import com.practice.spring.basicboardv2.dto.BoardDetailResponseDTO;
 import com.practice.spring.basicboardv2.dto.BoardListResponseDTO;
 import com.practice.spring.basicboardv2.model.Article;
 import com.practice.spring.basicboardv2.service.BoardService;
+import org.springframework.core.io.Resource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -33,6 +40,14 @@ public class BoardApiController {
                 .build();
     }
 
+    @GetMapping("/{id}")
+    public BoardDetailResponseDTO   getBoardDetail(@PathVariable("id") int id){
+        return  boardService
+                .getBoardDetail(id)
+                .toBoardDetailResponseDTO();
+
+    }
+
     @PostMapping
     public void saveArticle(
             @RequestParam("title") String title,
@@ -43,4 +58,20 @@ public class BoardApiController {
         boardService.saveArticle(userId, title, content, file);
 
     }
+
+    @GetMapping("/file/download/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("fileName") String fileName){
+        Resource resource=boardService.downloadFile(fileName);
+
+        //한글 파일명을 URL 인코딩
+        String encoded= URLEncoder.encode(resource.getFilename(), StandardCharsets.UTF_8);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encoded)
+                .body(resource);
+
+
+    }
+
 }

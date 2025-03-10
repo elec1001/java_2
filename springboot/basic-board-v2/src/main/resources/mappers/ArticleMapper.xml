@@ -34,6 +34,15 @@
         FROM article;
     </select>
 
+    <select id="getArticleById"
+            parameterType="long"
+            resultMap="ariticleResultMap">
+        SELECT
+            id,title,content,user_id,file_path,created,updated
+        FROM article
+        WHERE id=#{id};
+    </select>
+
 
 
 </mapper>

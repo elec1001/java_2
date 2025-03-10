@@ -24,8 +24,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        
+
+        String requestURI = request.getRequestURI();
+        logger.info("requestURI: {}"+requestURI);
+        if("/refresh-token".equals(requestURI)){
+            filterChain.doFilter(request,response);
+            return;
+        }
         String token = resolveToken(request);
+     //   System.out.println("token:"+token);
+     //  response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         if (token != null && tokenProvider.validateToken(token)==1) {
             //토큰이 유효할 경우 인증정보를 설정
 
@@ -34,9 +42,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
             Member member = tokenProvider.getTokenDetails(token);
             request.setAttribute("member", member);
-        }else  {
-            filterChain.doFilter(request,response);
-        }    
+        }else if (token!=null && tokenProvider.validateToken(token)==2){
+           response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+           return; //더이상 진행 시키지 않음
+        }
+
+        filterChain.doFilter(request,response);
 
     }
 
