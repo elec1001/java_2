@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-service
+  labels:
+    app: catalog-service
+spec:
+  replicas: 1 # 파드수
+  selector:
+    matchLabels:
+      app: catalog-service
+  template:
+    metadata:
+      name: catalog-service
+      labels:
+        app: catalog-service
+    spec:
+      containers:
+        - name: catalog-service
+          image: nginx
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ] # 쿠버네티스가 서비스를 살릴때 쓰느 명령어?
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: SPRING_DATA_SOURCE
+              value: jdbc:mysql://polar-mysql:3306/catalog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+
+      restartPolicy: Always
+      
