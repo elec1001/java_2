@@ -1,4 +1,9 @@
 package com.practice.spring.authservice.type;
 
-public class Role {
+import lombok.Getter;
+
+@Getter
+public enum Role {
+    ROLE_USER,
+    ROLE_ADMIN
 }

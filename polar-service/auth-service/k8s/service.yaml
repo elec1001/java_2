@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: $title$
+  name: auth-service
 spec:
+  type: ClusterIP
   selector:
-    app: $title$
+    app: auth-service
   ports:
-    - protocol: $TCP$
-      port: $80$
-      targetPort: $8080$
-  type: NodePort
-  $END$
+    - protocol: TCP
+      port: 80 # pod 는 개별 서버라서 포트 같아도 상관없음
+      targetPort: 9004
