@@ -1,4 +1,9 @@
 package com.practice.spring.edgeservice.dto;
 
-public class validTokenResponseDTO {
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+public class ValidTokenResponseDTO {
+    private int statusNum;
 }
