@@ -1,19 +1,27 @@
 package com.practice.spring.catalogservice.service;
 
 import com.practice.spring.catalogservice.domain.Book;
+import com.practice.spring.catalogservice.domain.BookResponseDTO;
 import com.practice.spring.catalogservice.domain.BookRepository;
 import com.practice.spring.catalogservice.exception.BookAlreadyExistsException;
 import com.practice.spring.catalogservice.exception.BookNotFoundExcetion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
 
-    public Iterable<Book> viewBookList() {
-        return bookRepository.findAll();
+    public List<BookResponseDTO> viewBookList() {
+        return StreamSupport.stream(bookRepository.findAll().spliterator(), false)
+                .map(BookResponseDTO::from)
+                .collect(Collectors.toList());
+
     }
     public Book viewBook(String isbn) {
         return bookRepository.findByIsbn(isbn)
@@ -42,11 +50,11 @@ public class BookService {
                                     .title(book.title())
                                     .author(book.author())
                                     .price(book.price())
-                                    .createdAt(book.createdAt())
-                                    .lastModifiedAt(book.lastModifiedAt())
+                                    .createdAt(existingBook.createdAt())
+                                    .lastModifiedAt(existingBook.lastModifiedAt())
                                     .version(existingBook.version())
                                     .build();
-                            return bookRepository.save(existingBook);
+                            return bookRepository.save(book);
                         }
                 ).orElseGet(()->bookRepository.save(book));
     }

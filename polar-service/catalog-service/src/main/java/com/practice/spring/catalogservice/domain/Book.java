@@ -2,6 +2,7 @@ package com.practice.spring.catalogservice.domain;
 
 import jakarta.validation.constraints.*;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -36,3 +37,4 @@ public record Book (
         @Version
         int version //낙관적 락 ? (혹은 비관적 락).동시성 문제 해결
 ){}
+

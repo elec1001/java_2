@@ -17,18 +17,18 @@ spec:
     spec:
       containers:
         - name: catalog-service
-          image: nginx
+          image: catalog-service
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
               exec:
                 command: [ "sh", "-c", "sleep 5" ] # 쿠버네티스가 서비스를 살릴때 쓰느 명령어?
           ports:
-            - containerPort: 80
-              protocol: TCP
+            - containerPort: 9001
+
           env:
-            - name: SPRING_DATA_SOURCE
+            - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://polar-mysql:3306/catalog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 
-      restartPolicy: Always
+
       
