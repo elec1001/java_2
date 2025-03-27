@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polar-mysql
+  labels:
+    db: polar-mysql
+spec:
+  selector:
+    matchLabels:
+      db: polar-mysql
+  template:
+    metadata:
+      labels:
+        db: polar-mysql
+    spec:
+      containers:
+        - name: polar-mysql
+          image: mysql:latest
+          env: 
+            - name: MYSQL_ROOT_PASSWORD
+              value: "1234"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          volumeMounts:
+            - name: initdb-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: initdb-script
+          configMap:
+            name: mysql-initdb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polar-mysql
+  labels:
+    db: polar-mysql
+spec:
+  type: ClusterIP
+  selector:
+    db: polar-mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb
+data:
+  init-db.sql: |
+    CREATE DATABASE IF NOT EXISTS `catalog`;
+    USE `catalog`;
+
+    CREATE TABLE IF NOT EXISTS book (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      author VARCHAR(255) NOT NULL,
+      isbn VARCHAR(255) NOT NULL,
+      price DOUBLE NOT NULL,
+      title VARCHAR(255) NOT NULL,
+      create_at TIMESTAMP NOT NULL,
+      last_modified_at TIMESTAMP NOT NULL,
+      version INT NOT NULL
+    ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    
+
+    CREATE DATABASE IF NOT EXISTS `order`;
+    USE `order`;
+
+
+    CREATE TABLE IF NOT EXISTS orders (
+      id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      book_isbn VARCHAR(255) NOT NULL,
+      book_name VARCHAR(255),
+      book_price DECIMAL(10, 2), 
+      quantity INT NOT NULL,
+      status VARCHAR(255) NOT NULL,
+      created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+      last_modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+      version INT NOT NULL
+    ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    CREATE DATABASE IF NOT EXISTS `auth`;
+    USE `auth`;
+
+
+    CREATE TABLE IF NOT EXISTS user (
+      id BIGINT AUTO_INCREMENT PRIMARY KEY,
+      user_id VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL,
+      user_name VARCHAR(255) NOT NULL,
+      role VARCHAR(50) NOT NULL 
+    ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
