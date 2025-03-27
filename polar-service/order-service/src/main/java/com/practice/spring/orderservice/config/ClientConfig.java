@@ -13,7 +13,7 @@ public class ClientConfig {
             WebClient.Builder webClientbuilder
     ) {
         return webClientbuilder
-                .baseUrl(clientProperties.catalogServiceUri().toString())
+                .baseUrl(String.valueOf(clientProperties.catalogServiceUri()))
                 //@NotNull울 썼기 때문에 toString 써도 무방
                 .build();
     }

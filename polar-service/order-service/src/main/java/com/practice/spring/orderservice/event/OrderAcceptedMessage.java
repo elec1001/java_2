@@ -1,4 +1,6 @@
 package com.practice.spring.orderservice.event;
 
-public record OrderAcceptedMessage() {
+public record OrderAcceptedMessage(
+        Long orderId
+) {
 }

@@ -1,26 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: $title$
+  name: order-service
   labels:
-    app: $title$
+    app:  order-service
 spec:
-  replicas: $1$
+  replicas: 1
   selector:
     matchLabels:
-      app: $title$
+      app:  order-service
   template:
     metadata:
-      name: $title$
+      name:  order-service
       labels:
-        app: $title$
+        app:  order-service
     spec:
       containers:
-        - name: $title$
-          image: $nginx$
+        - name:  order-service
+          image: nginx
           imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ] # 쿠버네티스가 서비스를 살릴때 쓰느 명령어?
           ports:
-            - containerPort: $80$
-              protocol: $TCP$
-      restartPolicy: Always
-      $END$
+            - containerPort: 9002
+
+          env:
+            - name: SPRING_R2DBC_URL
+              value: r2dbc:mysql://polar-mysql:3306/order
+
+      
