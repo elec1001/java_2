@@ -16,4 +16,4 @@ mybatis:
 
 jwt:
   issuer: elec1001@gmail.com
-  secret_key:  O4SxPzNI26ON9JzP9Yx1ffnBKucULNdrUrL0t114BdgRmvKGFGT9RnLp8BP1MG+RosB46Tb6V7WjeSKM/1EN2Q==
+  secret_key: xSrg4hsDyhED20ep9DYsQhMC5gUI4gPOvxGTyzLYMKk/0IdKNyCDp9Lad80WIzdlhjKow1nGwC2cEhOof7wtbQ==

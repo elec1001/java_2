@@ -3,19 +3,19 @@ package com.practice.spring.authservice.service;
 import com.practice.spring.authservice.config.security.CustomUserDetails;
 import com.practice.spring.authservice.mapper.UserMapper;
 import com.practice.spring.authservice.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
 
     private final UserMapper userMapper;
-
-    public UserDetailService(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

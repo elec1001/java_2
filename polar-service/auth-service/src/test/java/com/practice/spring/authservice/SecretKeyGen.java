@@ -1,4 +1,4 @@
-package com.practice.spring.basicboardv2;
+package com.practice.spring.authservice;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ public class SecretKeyGen {
     @Test
     void HS512_생성() {
         Mac sha512_HMAC = null;
-        String data = "Spring boot basic board 2";
+        String data = "Spring boot auth service";
         String secretKey = "256-bit-secret"; // 비밀키를 적절히 설정하세요.
         try {
 

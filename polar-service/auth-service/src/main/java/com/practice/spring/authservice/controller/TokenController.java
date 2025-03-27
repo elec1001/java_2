@@ -32,4 +32,5 @@ public class TokenController {
         log.info("Claims request ");
         return tokenService.getAuthentication(claimsRequestDTO.getToken());
     }
+
 }

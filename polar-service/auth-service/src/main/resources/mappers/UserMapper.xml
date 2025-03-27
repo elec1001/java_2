@@ -11,24 +11,25 @@
         <result property="role" column="role"/>
     </resultMap>
 
-    <select id="findByUserId"
+    <select id="findUserByUserId"
             parameterType="String"
-            resultMap="userResultMap">
-
+            resultMap="userResultMap"
+    >
         SELECT
-            id,user_id,password,user_name,role
-        FROM member
-
-        WHERE user_id=#{userId}
-
+            id, user_id, password, user_name, role
+        FROM
+            user
+        WHERE
+            user_id = #{userId};
     </select>
 
     <insert id="save"
             parameterType="User"
             useGeneratedKeys="true"
-            keyProperty="id">
-        INSERT INTO user (user_id,password,user_name,role)
-        VALUES (#{userId},#{password},#{userName},#{role});
+            keyProperty="id"
+    >
+        INSERT INTO user (user_id, password, user_name, role)
+        VALUES (#{userId}, #{password}, #{userName}, #{role});
     </insert>
 
 </mapper>

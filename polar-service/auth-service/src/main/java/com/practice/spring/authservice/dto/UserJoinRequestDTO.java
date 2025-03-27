@@ -23,4 +23,5 @@ public class UserJoinRequestDTO {
                 .role(role)
                 .build();
     }
+
 }

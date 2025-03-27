@@ -24,13 +24,14 @@ public class UserController {
 
     @PostMapping("/login")
     public UserLoginResponseDTO login(@RequestBody UserLoginRequestDTO userLoginRequestDTO) {
-        log.info("login  {} ", userLoginRequestDTO);
-        return  userService.login(userLoginRequestDTO.getUserId(), userLoginRequestDTO.getPassword());
+        log.info("login");
+        return userService.login(userLoginRequestDTO.getUserId(), userLoginRequestDTO.getPassword());
     }
 
     @PostMapping("/join")
     public UserJoinResponseDTO join(@RequestBody UserJoinRequestDTO userJoinRequestDTO) {
-        log.info("join");
+        log.info("join :: {}", userJoinRequestDTO);
         return userService.join(userJoinRequestDTO.toUser(bCryptPasswordEncoder));
     }
+
 }
