@@ -26,9 +26,5 @@ spec:
             - containerPort: 9004
           env:
 
-            - name: CATALOG_SERVICE_URL
-              value: http://catalog-service:80
-            - name: ORDER_SERVICE_URL
-              value: http://order-service:80
-            - name: AUTH_SERVICE_URL
-              value: http://auth-service:80
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://polar-mysql:3306/auth?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
