@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/order.js}"></script>
+    <link th:href="@{/css/order.css}" rel="stylesheet">
+    <title>Main</title>
+</head>
+<body>
+
+<div class="order-container">
+    <h2>주문 입력</h2>
+
+    <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input id="isbn" type="text" placeholder="isbn">
+    </div>
+
+    <div class="form-group">
+        <label for="quantity">Title</label>
+        <input id="quantity" type="text" placeholder="quantity">
+    </div>
+
+    <input type="submit" onclick="order();" value="Order POST">
+
+</div>
+
+</body>
+</html>
+

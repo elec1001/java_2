@@ -12,12 +12,12 @@ let handelTokenExpiration=()=> {
         success: (response) => {
             alert('로그인이 성공했습니다.');
             console.log('new Access:: '+response);
-            localStorage.setItem('accessToken', response.token);
-            window.location.href = "/"
+            localStorage.setItem('accessToken', response.accessToken);
+            window.location.href = response.url
         },
         error: () => {
             alert('로그인이 필요합니다.다시 로그인 해주세요')
-            window.location.href = "/member/login"
+            window.location.href = "/webs/login"
         }
 
     })
@@ -25,9 +25,9 @@ let handelTokenExpiration=()=> {
 
 
 let checkToken=()=> {
-    let token = localStorage.getItem('accecssToken');
+    let token = localStorage.getItem('accessToken');
     if (token == null || token.trim() === '') {
-        window.location.href = "/member.login"
+        window.location.href = "/webs/login"
     }
 }
 let setupAjax=()=>{
@@ -51,7 +51,7 @@ let getUserInfo=()=>{
                 resolve(response);
             },
             error: (xhr) => {
-                console.log('xhr'+xhr);
+                console.log('xhr :: '+xhr);
                 if(xhr.status===401){
                    handelTokenExpiration();
                 }else{

@@ -32,15 +32,16 @@ public class CookieUtil {
         }
     }
 
-    public static String getCookieValue(HttpServletRequest request, String name) {
-        if (request.getCookies() == null) {
-            for(Cookie cookie : request.getCookies()) {
-                if (name.equals(cookie.getName())) {//하드코딩 먼저 넣고 비교
+    public static String getCookieValue(Cookie[] cookies, String name) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }
         }
+
         return null;
     }
-
 }
+
