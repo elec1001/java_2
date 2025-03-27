@@ -2,7 +2,6 @@ package com.practice.spring.webfrontsrevice.client;
 
 import com.practice.spring.webfrontsrevice.dto.OrderClientReponseDTO;
 import com.practice.spring.webfrontsrevice.dto.OrderRequestDTO;
-import com.practice.spring.webfrontsrevice.dto.OrderResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-front-service
+  labels:
+    app: web-front-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-front-service
+  template:
+    metadata:
+      name: web-front-service
+      labels:
+        app: web-front-service
+    spec:
+      containers:
+        - name: web-front-service
+          image: nginx
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 9005
+          env:
+            - name: EDGE_SERVICE_URL
+              value: http://edge-servce:80
+
+
+      restartPolicy: Always
+      
